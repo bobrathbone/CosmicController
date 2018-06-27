@@ -1,0 +1,8 @@
+#!/bin/bash 
+set -e
+# Radio daemon post install script
+# $Id: cosmicd.postinst,v 1.1 2018/05/15 10:06:55 bob Exp $
+
+# Add post installation tasks here
+exit 0
+# End of post-installation script

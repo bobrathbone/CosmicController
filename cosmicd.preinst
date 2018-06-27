@@ -1,0 +1,10 @@
+#!/bin/bash 
+set -e
+# IQAudio cosmic controller daemon pre-install script
+# $Id: cosmicd.preinst,v 1.1 2018/05/15 10:06:55 bob Exp $
+# Insert preinstall actions here
+
+exit 0
+# End of preinst script
+
+# End of pre-install script

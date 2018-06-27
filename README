@@ -1,0 +1,50 @@
+These files provide a set of templates for developing your own applications based 
+upon the Raspberry Pi IQAudio Cosmic Controller 
+See IQAudio website at  http://iqaudio.co.uk
+
+Author : Bob Rathbone
+Site   : http://www.bobrathbone.com
+
+Test programs
+=============
+test_controller.py 	Test rotary encoder, buttons and LEDs
+test_oled.py		Test basic text functions on the OLED
+test_graphics.py	Test graphics functions
+cosmicd.py		A daemonized test program for OLED and Cosmic controller
+
+Classes
+=======
+config_class.py		Default configuration (Amend if necessary)
+cosmic_class.py		Cosmic controller functions class
+oled_class.py		OLED functions class
+status_led_class.py	Cosmic controller status LEDs class
+ir_remote_class.py	IR sensor class and test 
+
+Olimex source
+=============
+oled/Font.py		Font and text routines
+oled/Graphics.py	Graphics primitives
+oled/OLED.py		I2C interface to OLED
+oled/__init__.py	Init plus version
+
+Package build
+=============
+build.sh		Package build script
+cosmicd			Package build definition
+cosmicd.preinst		Package pre-installation routines skeleton
+cosmicd.postinst	Package post-installation routines skeleton
+cosmicd.postrm		Package remove routines skeleton
+
+The package will install the source in /usr/share/cosmicd/
+
+Libraries installation
+======================
+sudo apt-get install python-imaging python-smbus
+sudo apt-get install build-essential libi2c-dev i2c-tools python-dev libffi-dev 
+
+System requirements
+===================
+Enable i2c kernel module either with raspi-config 
+or by adding the following line to /boot/config.txt
+	dtparam=i2c_arm=on
+

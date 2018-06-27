@@ -1,0 +1,12 @@
+# IQAudio cosmic controller systemd script
+# $Id: cosmicd.service,v 1.1 2018/05/16 11:27:01 bob Exp $
+[Unit]
+Description=Cosmic controller daemon
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/share/cosmicd/cosmicd.py nodaemon
+
+[Install]
+WantedBy=multi-user.target

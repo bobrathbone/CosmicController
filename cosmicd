@@ -1,0 +1,68 @@
+### Commented entries have reasonable defaults.
+### Uncomment to edit them.
+# $Id: cosmicd,v 1.7 2018/05/26 11:40:01 bob Exp $
+# Source: <source package name; defaults to package name>
+Section: misc
+Priority: optional
+Homepage: http://www.bobrathbone.com
+Standards-Version: 3.9.2
+
+Package: cosmicd
+Version: 1.0
+Maintainer: Bob Rathbone <bob@bobrathbone.com>
+Email-Address : bob@bobrathbone.com
+Description: IQAudoio Cosmic Controller Development Templates
+ for the IQAudio Cosmic controller
+
+# Pre-Depends: <comma-separated list of packages>
+# Depends: <comma-separated list of packages>
+Depends:  python,python-mpd,mpc,mpd 
+# Recommends: <comma-separated list of packages>
+# Suggests: <comma-separated list of packages>
+# Provides: <comma-separated list of packages>
+# Replaces: <comma-separated list of packages>
+# Architecture: all
+Architecture: armhf
+
+# Copyright: <defaults to GPL2>
+# Changelog: <changelog file; defaults to a generic changelog>
+# Readme: <README.Debian file; defaults to a generic one>
+# Extra-Files: <comma-separated list of additional files for the doc directory>
+preinst: cosmicd.preinst
+
+Extra-Files: README
+
+# Files: <pair of space-separated paths; First is file to include, second is destination>
+Files:  cosmicd.py /usr/share/cosmicd/
+	daemon.py /usr/share/cosmicd/
+	config_class.py /usr/share/cosmicd/
+	oled_class.py /usr/share/cosmicd/
+	status_led_class.py /usr/share/cosmicd/
+	cosmic_class.py /usr/share/cosmicd/
+	rotary_class.py /usr/share/cosmicd/
+	ir_remote_class.py /usr/share/cosmicd/
+	test_oled.py /usr/share/cosmicd/
+	test_graphics.py /usr/share/cosmicd/
+	test_controller.py /usr/share/cosmicd/
+	test_remote.py /usr/share/cosmicd/
+	lircrc.dist /usr/share/cosmicd/
+	cosmicd /lib/systemd/system/
+	oled/__init__.py /usr/share/cosmicd/
+	oled/Font.py /usr/share/cosmicd/
+	oled/Graphics.py /usr/share/cosmicd/
+	oled/OLED.py /usr/share/cosmicd/
+	bitmaps/raspberry-pi-logo.bmp /usr/share/cosmicd/
+	bitmaps/clown1.bmp /usr/share/cosmicd/
+	bitmaps/clown2.bmp /usr/share/cosmicd/
+	bitmaps/clown3.bmp /usr/share/cosmicd/
+	bitmaps/clown4.bmp /usr/share/cosmicd/
+	bitmaps/clown5.bmp /usr/share/cosmicd/
+	bitmaps/clown6.bmp /usr/share/cosmicd/
+	bitmaps/clown7.bmp /usr/share/cosmicd/
+	bitmaps/clown8.bmp /usr/share/cosmicd/
+
+postinst: cosmicd.postinst
+postrm: cosmicd.postrm
+
+#  <more pairs, if there's more than one file to include. Notice the starting space>
+

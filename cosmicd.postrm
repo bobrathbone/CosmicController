@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+# Radio daemon post remove script
+# $Id: cosmicd.postrm,v 1.2 2018/05/26 11:49:54 bob Exp $
+
+exit 0
+# End of postrm script
+
