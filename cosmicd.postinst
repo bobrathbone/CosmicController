@@ -1,8 +1,17 @@
 #!/bin/bash 
 set -e
 # Radio daemon post install script
-# $Id: cosmicd.postinst,v 1.1 2018/05/15 10:06:55 bob Exp $
+# $Id: cosmicd.postinst,v 1.4 2019/06/07 18:42:40 bob Exp $
 
 # Add post installation tasks here
+DIR=/usr/share/cosmicd
+
+# Ensure owner is pi
+sudo chown -R pi:pi ${DIR}
+sudo chmod +x ${DIR}/*.py
+
+echo "Cosmic controller software installed in ${DIR}"
+echo "See README file for further information"
+
 exit 0
 # End of post-installation script

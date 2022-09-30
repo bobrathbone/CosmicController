@@ -1,10 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Generic daemon class
 # 
 # Raspberry Pi IQAudio Cosmic Controller Development Templates
 # See IQAudio website at  http://iqaudio.co.uk
 #
-# $Id: daemon.py,v 1.3 2018/05/16 13:03:59 bob Exp $
+# $Id: daemon.py,v 1.5 2022/09/28 19:19:09 bob Exp $
 # Author : Sander Marechal
 # Website http://www.jejik.com/articles/2007/02/a_simple_unix_linux_daemon_in_python/
 #
@@ -45,7 +45,7 @@ class Daemon:
 			if pid > 0:
 				# exit first parent
 				sys.exit(0) 
-		except OSError, e: 
+		except OSError as e: 
 			sys.stderr.write("fork #1 failed: %d (%s)\n" % (e.errno, e.strerror))
 			sys.exit(1)
 	
@@ -60,7 +60,7 @@ class Daemon:
 			if pid > 0:
 				# exit from second parent
 				sys.exit(0) 
-		except OSError, e: 
+		except OSError as e: 
 			sys.stderr.write("fork #2 failed: %d (%s)\n" % (e.errno, e.strerror))
 			sys.exit(1) 
 	
@@ -79,7 +79,7 @@ class Daemon:
 	def writepidfile(self):
 		atexit.register(self.delpid)
 		pid = str(os.getpid())
-		file(self.pidfile,'w+').write("%s\n" % pid)
+		open(self.pidfile,'w+').write("%s\n" % pid)
 	
 	def delpid(self):
 		os.remove(self.pidfile)
@@ -99,7 +99,7 @@ class Daemon:
 		try:
 			self.begin(False)
 		except KeyboardInterrupt:
-			print "\nCosmic controller daemon stopped"
+			print("\nCosmic controller daemon stopped")
 
 	def begin(self,daemonize):
 		"""
@@ -108,7 +108,7 @@ class Daemon:
 		# Check for a pidfile to see if the daemon already runs
 		cpid = None
 		try:
-			pf = file(self.pidfile,'r')
+			pf = open(self.pidfile,'r')
 			pid = int(pf.read().strip())
 			pf.close()
 		except IOError:
@@ -123,7 +123,7 @@ class Daemon:
 		if daemonize:
 			self.daemonize()
 		else:
-			print "Cosmic controller daemon running pid", os.getpid()
+			print(("Cosmic controller daemon running pid", os.getpid()))
 
 		self.run()
 
@@ -149,13 +149,13 @@ class Daemon:
 			os.kill(pid, SIGTERM)
 			sys.exit(0)
 
-		except OSError, err:
+		except OSError as err:
 			err = str(err)
 			if err.find("No such process") > 0:
 				if os.path.exists(self.pidfile):
 					os.remove(self.pidfile)
 			else:
-				print str(err)
+				print((str(err)))
 				sys.exit(1)
 
 	def restart(self):
@@ -175,4 +175,7 @@ class Daemon:
 		You should override this method when you subclass Daemon. It will be called after the process has been
 		daemonized by start() or restart().
 		"""
+
+# set tabstop=4 shiftwidth=4 expandtab
+# retab
 

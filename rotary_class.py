@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Raspberry Pi Rotary Encoder Class
-# $Id: rotary_class.py,v 1.1 2018/05/12 13:24:01 bob Exp $
+# $Id: rotary_class.py,v 1.2 2022/09/28 06:35:43 bob Exp $
 #
 # Copyright 2011 Ben Buxton. Licenced under the GNU GPL Version 3.
 # Contact: bb@cactii.net
@@ -11,7 +11,7 @@
 # License: GNU V3, See https://www.gnu.org/copyleft/gpl.html
 #
 # Disclaimer: Software is provided as is and absolutly no warranties are implied or given.
-#	     The authors shall not be liable for any loss or damage however caused.
+#        The authors shall not be liable for any loss or damage however caused.
 #
 #
 # A typical mechanical rotary encoder emits a two bit gray code
@@ -92,18 +92,18 @@ DIR_CCW = 0x20
 R_START = 0x0
 
 HALF_TAB = (
-  # R_START (00)
-  (R_START_M,	   R_CW_BEGIN,     R_CCW_BEGIN,  R_START),
-  # R_CCW_BEGIN
-  (R_START_M | DIR_CCW, R_START,	R_CCW_BEGIN,  R_START),
-  # R_CW_BEGIN
-  (R_START_M | DIR_CW,  R_CW_BEGIN,     R_START,      R_START),
-  # R_START_M (11)
-  (R_START_M,	   R_CCW_BEGIN_M,  R_CW_BEGIN_M, R_START),
-  # R_CW_BEGIN_M
-  (R_START_M,	   R_START_M,      R_CW_BEGIN_M, R_START | DIR_CW),
-  # R_CCW_BEGIN_M
-  (R_START_M,	   R_CCW_BEGIN_M,  R_START_M,    R_START | DIR_CCW),
+    # R_START (00)
+    (R_START_M,      R_CW_BEGIN,     R_CCW_BEGIN,  R_START),
+    # R_CCW_BEGIN
+    (R_START_M | DIR_CCW, R_START,    R_CCW_BEGIN,  R_START),
+    # R_CW_BEGIN
+    (R_START_M | DIR_CW,  R_CW_BEGIN,     R_START,      R_START),
+    # R_START_M (11)
+    (R_START_M,      R_CCW_BEGIN_M,  R_CW_BEGIN_M, R_START),
+    # R_CW_BEGIN_M
+    (R_START_M,      R_START_M,      R_CW_BEGIN_M, R_START | DIR_CW),
+    # R_CCW_BEGIN_M
+    (R_START_M,      R_CCW_BEGIN_M,  R_START_M,    R_START | DIR_CCW),
 )
 
 R_CW_FINAL  = 0x1
@@ -114,20 +114,20 @@ R_CCW_FINAL = 0x5
 R_CCW_NEXT  = 0x6
 
 FULL_TAB = (
-  # R_START
-  (R_START,    R_CW_BEGIN,  R_CCW_BEGIN, R_START),
-  # R_CW_FINAL
-  (R_CW_NEXT,  R_START,     R_CW_FINAL,  R_START | DIR_CW),
-  # R_CW_BEGIN
-  (R_CW_NEXT,  R_CW_BEGIN,  R_START,     R_START),
-  # R_CW_NEXT
-  (R_CW_NEXT,  R_CW_BEGIN,  R_CW_FINAL,  R_START),
-  # R_CCW_BEGIN
-  (R_CCW_NEXT, R_START,     R_CCW_BEGIN, R_START),
-  # R_CCW_FINAL
-  (R_CCW_NEXT, R_CCW_FINAL, R_START,     R_START | DIR_CCW),
-  # R_CCW_NEXT
-  (R_CCW_NEXT, R_CCW_FINAL, R_CCW_BEGIN, R_START),
+    # R_START
+    (R_START,    R_CW_BEGIN,  R_CCW_BEGIN, R_START),
+    # R_CW_FINAL
+    (R_CW_NEXT,  R_START,     R_CW_FINAL,  R_START | DIR_CW),
+    # R_CW_BEGIN
+    (R_CW_NEXT,  R_CW_BEGIN,  R_START,     R_START),
+    # R_CW_NEXT
+    (R_CW_NEXT,  R_CW_BEGIN,  R_CW_FINAL,  R_START),
+    # R_CCW_BEGIN
+    (R_CCW_NEXT, R_START,     R_CCW_BEGIN, R_START),
+    # R_CCW_FINAL
+    (R_CCW_NEXT, R_CCW_FINAL, R_START,     R_START | DIR_CCW),
+    # R_CCW_NEXT
+    (R_CCW_NEXT, R_CCW_FINAL, R_CCW_BEGIN, R_START),
 )
 
 # Enable this to emit codes twice per step.
@@ -150,64 +150,64 @@ class RotaryEncoder:
     BUTTONDOWN=3
     BUTTONUP=4
 
-    def __init__(self, pinA, pinB, button,callback):
-	self.pinA = pinA
-	self.pinB = pinB
-	self.button = button
-	self.callback = callback
+    def __init__(self, pinA, pinB, switch,callback):
+        self.pinA = pinA
+        self.pinB = pinB
+        self.switch = switch
+        self.callback = callback
 
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setwarnings(False)
-	
-	try:
-		# The following lines enable the internal pull-up resistors
-		GPIO.setup(self.pinA, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-		GPIO.setup(self.pinB, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-		GPIO.setup(self.button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
+        
+        try:
+            # The following lines enable the internal pull-up resistors
+            GPIO.setup(self.pinA, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.setup(self.pinB, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.setup(self.switch, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-		# Add event detection to the GPIO inputs
-		GPIO.add_event_detect(self.pinA, GPIO.BOTH, callback=self.rotary_event)
-		GPIO.add_event_detect(self.pinB, GPIO.BOTH, callback=self.rotary_event)
-		GPIO.add_event_detect(self.button, GPIO.FALLING, callback=self.button_event, 
-					bouncetime=150)
-	except Exception as e:
-		print "Rotary Encoder initialise error " + str(e)
-		sys.exit(1)
+            # Add event detection to the GPIO inputs
+            GPIO.add_event_detect(self.pinA, GPIO.BOTH, callback=self.rotary_event)
+            GPIO.add_event_detect(self.pinB, GPIO.BOTH, callback=self.rotary_event)
+            GPIO.add_event_detect(self.switch, GPIO.FALLING, callback=self.switch_event, 
+                        bouncetime=150)
+        except Exception as e:
+            print ("Rotary Encoder initialise error " + str(e))
+            sys.exit(1)
 
 
     # Call back routine called by switch events
     def rotary_event(self, switch):
-	# Grab state of input pins.
-	pinstate = (GPIO.input(self.pinB) << 1) | GPIO.input(self.pinA)
-	# Determine new state from the pins and state table.
-	self.state = STATE_TAB[self.state & 0xf][pinstate]
-	# Return emit bits, ie the generated event.
-	result = self.state & 0x30
-	if result:
-	    event = self.CLOCKWISE if result == 32 else self.ANTICLOCKWISE
-	    self.callback(event)
-	    return result
+        # Grab state of input pins.
+        pinstate = (GPIO.input(self.pinB) << 1) | GPIO.input(self.pinA)
+        # Determine new state from the pins and state table.
+        self.state = STATE_TAB[self.state & 0xf][pinstate]
+        # Return emit bits, ie the generated event.
+        result = self.state & 0x30
+        if result:
+            event = self.CLOCKWISE if result == 32 else self.ANTICLOCKWISE
+            self.callback(event)
+            return result
 
-    # Push button up event
-    def button_event(self,button):
-	if GPIO.input(button): 
-	    event = self.BUTTONUP 
-	else:
-	    event = self.BUTTONDOWN 
-	self.callback(event)
-	return
+    # Push switch up event
+    def switch_event(self,switch):
+        if GPIO.input(switch): 
+            event = self.BUTTONUP 
+        else:
+            event = self.BUTTONDOWN 
+        self.callback(event)
+        return
 
-    # Get a button state - returns 1 or 0
-    def getButtonState(self, button):
-	return  GPIO.input(button)
+    # Get a switch state - returns 1 or 0
+    def getSwitchState(self, switch):
+        return  GPIO.input(switch)
 
-    def buttonPressed(self,button):
-	state = self.getButtonState(button)	
-	if state == 1:
-	    pressed = False
-	else:
-	    pressed = True
-	return pressed
+    def switchPressed(self,switch):
+        state = self.getSwitchState(switch) 
+        if state == 1:
+            pressed = False
+        else:
+            pressed = True
+        return pressed
 
 # End of class
 
@@ -216,64 +216,47 @@ class RotaryEncoder:
 
 Names = ['NO_EVENT', 'CLOCKWISE', 'ANTICLOCKWISE', 'BUTTON DOWN', 'BUTTON UP']
 
-# Volume event - test only - No event generation
-def volume_event(event):
-	name = ''
-	try:
-		name = Names[event]
-	except:
-		name = 'ERROR'
+# Rotary event - test only - No event generation
+def rotary_event(event):
+    name = ''
+    try:
+        name = Names[event]
+    except:
+        name = 'ERROR'
 
-	print "Volume event ", event, name
-	return
-
-# Tuner event - test only - No event generation
-def tuner_event(event):
-	name = ''
-	try:
-		name = Names[event]
-	except:
-		name = 'ERROR'
-
-	print "Tuner event ", event, name
-	return
+    print ("Rotary event ", event, name)
+    return
 
 if __name__ == "__main__":
 
-	from config_class import Configuration
-	config = Configuration()
+    from config_class import Configuration
+    config = Configuration()
 
-	if pwd.getpwuid(os.geteuid()).pw_uid > 0:
-		print "This program must be run with sudo or root permissions!"
-		sys.exit(1)
+    #if pwd.getpwuid(os.geteuid()).pw_uid > 0:
+    #    print ("This program must be run with sudo or root permissions!")
+    ##    sys.exit(1)
 
-	print "Test rotary encoder Class"
+    print ("Test rotary encoder Class")
 
-	# Get configuration
-	left_switch = config.getSwitchGpio("left_switch")
-	right_switch = config.getSwitchGpio("right_switch")
-	mute_switch = config.getSwitchGpio("mute_switch")
-	down_switch = config.getSwitchGpio("down_switch")
-	up_switch = config.getSwitchGpio("up_switch")
-	menu_switch = config.getSwitchGpio("menu_switch")
+    # Get configuration
 
-	print "Left switch GPIO", left_switch
-	print "Right switch GPIO", right_switch
-	print "Up switch GPIO", up_switch
-	print "Down switch GPIO", down_switch
-	print "Mute switch GPIO", mute_switch
-	print "Menu switch GPIO", menu_switch
-	
-	volumeknob = RotaryEncoder(left_switch,right_switch,mute_switch, volume_event)
-	tunerknob = RotaryEncoder(down_switch,up_switch,menu_switch, tuner_event)
+    pinA = config.getEncoderA()
+    pinB = config.getEncoderB()
+    switch = config.getEncoderSwitch()
+    
+    print ("Encoder Pin A GPIO", pinA)
+    print ("Encoder Pin B GPIO", pinB)
+    print ("Encoder switch GPIO", switch)
 
-	try:
-		while True:
-			time.sleep(0.05)
+    rotaryknob = RotaryEncoder(pinA,pinB,switch,rotary_event)
 
-	except KeyboardInterrupt:
-		print " Stopped"
-		sys.exit(0)
+    try:
+        while True:
+            time.sleep(0.05)
+
+    except KeyboardInterrupt:
+        print (" Stopped")
+        sys.exit(0)
 
 
 # End of script

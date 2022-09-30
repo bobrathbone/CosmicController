@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Raspberry Pi Test IR remote control class
-# $Id: test_remote.py,v 1.1 2018/05/23 08:12:28 bob Exp $
+# $Id: test_remote.py,v 1.2 2022/09/28 16:06:57 bob Exp $
 #
 # Author : Bob Rathbone
 # Site   : http://www.bobrathbone.com
@@ -30,24 +30,27 @@ from ir_remote_class import IRRemote
 
 # Callback routine
 def ir_callback(button):
-	print "Callback got button:", button
+	print("Callback got button:", button)
 
 # Test routine
 if __name__ == "__main__":
 	pid = os.getpid()
-	print "Test remote control pid",pid
+	print("Test remote control pid",pid)
 
 	from ir_remote_class import IRRemote
 	ir_remote = IRRemote(ir_callback)
 
-	print "Activity LED on GPIO",ir_remote.getActivityLed()
-	print "Press Ctl-C to exit"
+	print("Activity LED on GPIO",ir_remote.getActivityLed())
+	print("Press Ctl-C to exit")
 
 	try:
 		ir_remote.listen()
 
 	except KeyboardInterrupt:
-		print " Exiting"
+		print(" Exiting")
 		sys.exit(0)
 
 # End of test routines
+# set tabstop=4 shiftwidth=4 expandtab
+# retab
+

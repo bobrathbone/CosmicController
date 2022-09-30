@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Raspberry Pi IQAudio Cosmic Controller Development Templates
 # See IQAudio website at  http://iqaudio.co.uk
 #
 # Raspberry Pi OLED 128x64 test program
 # This class drives the SDolomon Systech SSD1306 128 by 64 pixel OLED
 #
-# $Id: test_oled.py,v 1.5 2018/05/18 09:28:01 bob Exp $
+# $Id: test_oled.py,v 1.8 2022/09/28 18:29:54 bob Exp $
 # Author : Bob Rathbone
 # Site   : http://www.bobrathbone.com
 #
@@ -24,6 +24,8 @@ Lines = [0,16,32,48,56]
 from oled_class import Oled
 import time,datetime
 from time import strftime
+import sys
+import pdb
 
 def no_interrupt():
 	return False
@@ -56,7 +58,10 @@ if __name__ == "__main__":
 		oled.update()
 
 	except KeyboardInterrupt:
-		print "\nExit"
+		print("\nExit")
 		sys.exit(0)
 
 # End of test code
+# set tabstop=4 shiftwidth=4 expandtab
+# retab
+

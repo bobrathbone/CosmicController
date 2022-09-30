@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Raspberry Pi IR remote control class
-# $Id: ir_remote_class.py,v 1.6 2018/05/23 19:06:13 bob Exp $
+# $Id: ir_remote_class.py,v 1.7 2022/09/28 16:06:57 bob Exp $
 #
 # Author : Bob Rathbone
 # Site   : http://www.bobrathbone.com
@@ -52,7 +52,7 @@ class IRRemote:
 		try:
 			socket_name = config.getSocketName()
 			sockid = lirc.init(socket_name, lircrc)
-			print "Listener on socket " + str(socket) + " established"
+			print("Listener on socket " + str(socket) + " established")
 
 			#Listen loop
 			while True:
@@ -67,11 +67,11 @@ class IRRemote:
 						GPIO.output(self.remote_led, False)
 
 		except Exception as e:
-			print str(e)
+			print(str(e))
 			mesg = "Possible configuration error, check /etc/lirc/lircd.conf"
-			print mesg
+			print(mesg)
 			mesg = "Activation IR Remote Control failed - Exiting"
-			print mesg
+			print(mesg)
 			sys.exit(1)
 
 	# Get activity led GPIO
@@ -79,3 +79,5 @@ class IRRemote:
 		return self.remote_led
 
 # End of IR class
+# set tabstop=4 shiftwidth=4 expandtab
+# retab

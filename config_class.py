@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Raspberry Pi IQAudio Cosmic Controller Configuration Class
-# $Id: config_class.py,v 1.5 2018/05/26 11:46:48 bob Exp $
+# $Id: config_class.py,v 1.7 2022/09/28 19:05:51 bob Exp $
 #
 # Author : Bob Rathbone
 # Site   : http://www.bobrathbone.com
@@ -16,9 +16,9 @@
 class Configuration:
 
 	# The configuration left to right
-	_left_switch = 4
+	_left_switch = 6
 	_middle_switch = 5
-	_right_switch = 6
+	_right_switch = 4
 
 	# Rotary encoder
 	_encoder_switch = 27
@@ -73,3 +73,5 @@ class Configuration:
 	 	return self._lirc_socket_name
 
 # End of configuration class
+# set tabstop=4 shiftwidth=4 expandtab
+# retab

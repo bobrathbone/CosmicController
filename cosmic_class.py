@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Raspberry Pi IQAudio Cosmic Controller Development Templates
 # See IQAudio website at  http://iqaudio.co.uk
 #
 # Raspberry Pi Cosmic Controller (IQAudio) Class
-# $Id: cosmic_class.py,v 1.2 2018/05/15 09:38:36 bob Exp $
+# $Id: cosmic_class.py,v 1.3 2022/09/28 06:41:59 bob Exp $
 #
 # Author: Bob Rathbone
 # Site   : http://www.bobrathbone.com
@@ -27,56 +27,60 @@ config = Configuration()
 
 class Button:
 
-	# Default configuration left to right
-	left_switch = 4
-	middle_switch = 5
-	right_switch = 6
+    # Default configuration left to right
+    left_switch = 4
+    middle_switch = 5
+    right_switch = 6
 
-	# Rotary encoder
-	encoder_switch = 27
-	encoder_a = 23
-	encoder_b = 24
+    # Rotary encoder
+    encoder_switch = 27
+    encoder_a = 23
+    encoder_b = 24
 
-	# Status LEDs
-	led1 = 14
-	led2 = 15
-	led3 = 16
+    # Status LEDs
+    led1 = 14
+    led2 = 15
+    led3 = 16
 
-	def __init__(self,button,callback):
-		self.button = button
-		self.callback = callback
+    def __init__(self,button,callback):
+        self.button = button
+        self.callback = callback
 
-		if self.button > 0:
-			GPIO.setmode(GPIO.BCM)
-			GPIO.setwarnings(False)
+        if self.button > 0:
+            GPIO.setmode(GPIO.BCM)
+            GPIO.setwarnings(False)
 
-			try:
-				# The following lines enable the internal pull-up resistor
-				GPIO.setup(self.button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            try:
+                # The following lines enable the internal pull-up resistor
+                GPIO.setup(self.button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-				# Add event detection to the GPIO inputs
-				GPIO.add_event_detect(self.button, GPIO.FALLING, 
-							callback=self.button_event,
-							bouncetime=200)
-			except Exception as e:
-				print "Button GPIO " + str(self.button)\
-						 + " initialise error: " + str(e)
-				sys.exit(1)
-		 
+                # Add event detection to the GPIO inputs
+                GPIO.add_event_detect(self.button, GPIO.FALLING, 
+                            callback=self.button_event,
+                            bouncetime=200)
+            except Exception as e:
+                print("Button GPIO " + str(self.button)\
+                         + " initialise error: " + str(e))
+                sys.exit(1)
+         
 
-	# Push button event
-	def button_event(self,button):
-	    	event_button = self.button
-		self.callback(event_button)	# Pass button event to event class
-		return
+    # Push button event
+    def button_event(self,button):
+        event_button = self.button
+        self.callback(event_button) # Pass button event to event class
+        return
 
-	# Was a button pressed (goes from 1 to 0)
-	def pressed(self):
-		state = GPIO.input(self.button)
-		if state == 0:
-			pressed = True
-		else:
-			pressed = False
-		return pressed
+    # Was a button pressed (goes from 1 to 0)
+    def pressed(self):
+        state = GPIO.input(self.button)
+        if state == 0:
+            pressed = True
+        else:
+            pressed = False
+        return pressed
+
 
 # End of Cosmic Button Class
+# set tabstop=4 shiftwidth=4 expandtab
+# retab
+

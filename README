@@ -5,6 +5,15 @@ See IQAudio website at  http://iqaudio.co.uk
 Author : Bob Rathbone
 Site   : http://www.bobrathbone.com
 
+First release 
+=============
+May 2018
+
+Version 1.1
+===========
+8 June 2019
+1) Remove incorrect dependencies
+
 Test programs
 =============
 test_controller.py 	Test rotary encoder, buttons and LEDs
